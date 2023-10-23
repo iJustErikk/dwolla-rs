@@ -4,7 +4,7 @@ use dwolla::model::*;
 use dwolla::request::ReallocateLabelRequired;
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env();
+    let client = DwollaClient::from_env().await;
     let args = ReallocateLabelRequired {
         amount: Amount {
             currency: "your currency".to_owned(),

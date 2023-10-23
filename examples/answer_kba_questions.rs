@@ -3,7 +3,7 @@ use dwolla::DwollaClient;
 use dwolla::model::*;
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env();
+    let client = DwollaClient::from_env().await;
     let answers = vec![
         AnsweredKbaQuestion { answer_id : "your answer id".to_owned(), question_id :
         "your question id".to_owned() }

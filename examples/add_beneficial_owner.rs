@@ -4,7 +4,7 @@ use dwolla::model::*;
 use dwolla::request::AddBeneficialOwnerRequired;
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env();
+    let client = DwollaClient::from_env().await;
     let args = AddBeneficialOwnerRequired {
         address: Address {
             address1: "your address 1".to_owned(),

@@ -3,7 +3,7 @@ use dwolla::DwollaClient;
 use dwolla::model::*;
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env();
+    let client = DwollaClient::from_env().await;
     let account_number = "your account number";
     let id = "your id";
     let routing_number = "your routing number";

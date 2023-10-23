@@ -3,7 +3,7 @@ use dwolla::DwollaClient;
 use dwolla::model::*;
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env();
+    let client = DwollaClient::from_env().await;
     let amount1 = Amount {
         currency: "your currency".to_owned(),
         value: "your value".to_owned(),

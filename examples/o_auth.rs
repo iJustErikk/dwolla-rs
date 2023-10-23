@@ -3,7 +3,7 @@ use dwolla::DwollaClient;
 use dwolla::model::*;
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env();
+    let client = DwollaClient::from_env().await;
     let response = client.o_auth().await.unwrap();
     println!("{:#?}", response);
 }
