@@ -1,33 +1,32 @@
 #![allow(unused_imports)]
-use dwolla::DwollaClient;
-use dwolla::model::*;
+use chrono::NaiveDate;
+use dwolla::{Client, types::{CatalogResponse, ListCustomersStatus, CreateCustomer, FailedCreateCustomerResponse}};
+use progenitor_client::{Error, ResponseValue};
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env().await;
-    let first_name = "your first name";
-    let last_name = "your last name";
-    let response = client
-        .create_customer(first_name, last_name)
-        .idempotency_key("your idempotency key")
-        .address1("your address 1")
-        .address2("your address 2")
-        .business_classification("your business classification")
-        .business_name("your business name")
-        .business_type("your business type")
-        .city("your city")
-        .correlation_id("your correlation id")
-        .date_of_birth(chrono::Utc::now().date_naive())
-        .doing_business_as("your doing business as")
-        .ein("your ein")
-        .email("your email")
-        .ip_address("your ip address")
-        .phone("your phone")
-        .postal_code("your postal code")
-        .ssn("your ssn")
-        .state("your state")
-        .type_("your type")
-        .website("your website")
-        .await
-        .unwrap();
-    println!("{:#?}", response);
+    let client = Client::from_env().await;
+    let response = client.create_customer(Some("123"), &CreateCustomer{address1: Some(String::from("315 Utica Ave.")), address2: None, business_classification: None, business_name: None, business_type: None, city: Some(String::from("New York City")), correlation_id: None, date_of_birth: Some(NaiveDate::from_ymd_opt(1996, 11, 2).unwrap()), doing_business_as: None, ein: None, email: Some(String::from("testemail@nowhere.com")), first_name: String::from("Family"), ip_address: None, last_name: String::from("Crab"), phone: Some(String::from("7184841488")), postal_code: Some(String::from("11203")), ssn: Some(String::from("XXXX")), state: Some(String::from("NY")), type_: Some(String::from("personal")), website: None}).await;
+    match response {
+        Ok(res) => {
+            println!("{:#?}", res);
+        }
+        Err(Error::ErrorResponse(res)) => {
+            let err = res.into_inner();
+            match err {
+                FailedCreateCustomerResponse::Validation(e) => {
+                    println!("{:#?}", e.embedded["errors"]);
+                },
+                FailedCreateCustomerResponse::Empty(e) => {
+                    println!("{:#?}", e);
+
+                }
+            }
+        },
+        Err(Error::CommunicationError(_)) => {
+            // should retry with backoff and jitter
+        },
+        _ => {
+            // something was wrong with serializing. this should be incredibly rare if there was not a breaking API change.
+        }
+    }
 }

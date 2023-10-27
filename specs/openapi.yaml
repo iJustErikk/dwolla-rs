@@ -396,43 +396,7 @@ paths:
         '404':
           description: Owner not found.
       deprecated: false
-    post:
-      tags:
-        - beneficial-owners
-      summary: uploadBeneficialOwnerDocument
-      description: Upload a verification document for a beneficial owner.
-      operationId: uploadBeneficialOwnerDocument
-      parameters:
-        - name: Idempotency-Key
-          in: header
-          description: Unique key used to prevent duplication over a short period of time.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        description: Upload a document for a beneficial owner.
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                documentType:
-                  type: string
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '201':
-          description: Document created.
-          headers: {}
-        '400':
-          description: Invalid documentType or file error.
-        '404':
-          description: Beneficial Owner not found.
-      deprecated: false
+
   /business-classifications:
     get:
       tags:
@@ -747,51 +711,6 @@ paths:
             application/vnd.dwolla.v1.hal+json:
               schema:
                 $ref: '#/components/schemas/DocumentListResponse'
-        '404':
-          description: Customer not found.
-      deprecated: false
-    post:
-      tags:
-        - customers
-      summary: uploadDocument
-      description: Upload a verification document.
-      operationId: uploadCustomerDocument
-      parameters:
-        - name: Idempotency-Key
-          in: header
-          description: Unique key used to prevent duplication over a short period of time.
-          required: false
-          style: simple
-          explode: false
-          schema:
-            type: string
-        - name: id
-          in: path
-          description: ID of customer.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        description: Upload a document for a customer.
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                documentType:
-                  type: string
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '201':
-          description: Document created.
-          headers: {}
-        '400':
-          description: Invalid documentType or file error.
         '404':
           description: Customer not found.
       deprecated: false

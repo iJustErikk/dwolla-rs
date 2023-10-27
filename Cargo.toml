@@ -1,83 +1,36 @@
 [package]
 name = "dwolla"
-edition = "2021"
 version = "0.1.0"
-description = "Dwolla client, generated from the OpenAPI spec."
-homepage = "https://github.com/ijusterikk/dwolla-rs"
-documentation = "https://docs.rs/dwolla"
-readme = "README.md"
+edition = "2021"
 license = "MIT"
-repository = "https://github.com/ijusterikk/dwolla-rs"
-
-[workspace]
-members = []
+description = "Dwolla bindings for Rust"
+repository = "https://github.com/iJustErikk/dwolla-rs"
 
 [dependencies]
-base64 = "0.21.4"
-futures = "0.3.25"
-httpclient = "0.18.0"
-serde_json = "1.0.81"
+base64 = "0.21.5"
+bytes = "1.5.0"
+chrono = { version = "0.4.31", default-features = false, features = ["serde"] }
+futures-core = "0.3.28"
+progenitor-client = "0.4.0"
+regress = "0.7.1"
+reqwest = { version = "0.11.20", default-features=false, features = ["json", "stream", "rustls-tls"] }
+serde = { version = "1.0.188", features = ["derive"] }
+serde_json = "1.0.107"
 serde_urlencoded = "0.7.1"
 
-[dependencies.chrono]
-version = "0.4.26"
-features = ["serde"]
-
-[dependencies.serde]
-version = "1.0.137"
-features = ["derive"]
-
-[dev-dependencies.tokio]
-version = "1.18.2"
-features = ["full"]
-
-[lib]
-path = "src/lib.rs"
-name = "dwolla"
-doctest = false
-edition = "2021"
-crate-type = ["rlib"]
-required-features = []
+[dev-dependencies]
+tokio = {version="1.33.0", features = ["macros", "rt-multi-thread"] }
 
 [[example]]
-path = "examples/add_beneficial_owner.rs"
-name = "add_beneficial_owner"
+path = "examples/root.rs"
+name = "root"
 edition = "2021"
 required-features = []
 
-[[example]]
-path = "examples/add_ledger_entry.rs"
-name = "add_ledger_entry"
-edition = "2021"
-required-features = []
 
 [[example]]
-path = "examples/answer_kba_questions.rs"
-name = "answer_kba_questions"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/by_id_3.rs"
-name = "by_id_3"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/change_ownership_status.rs"
-name = "change_ownership_status"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_account_funding_source.rs"
-name = "create_account_funding_source"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_authorization.rs"
-name = "create_authorization"
+path = "examples/search.rs"
+name = "search"
 edition = "2021"
 required-features = []
 
@@ -88,80 +41,8 @@ edition = "2021"
 required-features = []
 
 [[example]]
-path = "examples/create_customer_funding_source.rs"
-name = "create_customer_funding_source"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_customer_funding_sources_token.rs"
-name = "create_customer_funding_sources_token"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_funding_sources_token.rs"
-name = "create_funding_sources_token"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_label.rs"
-name = "create_label"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_mass_payment.rs"
-name = "create_mass_payment"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_transfer.rs"
-name = "create_transfer"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/create_webhook_subscription.rs"
-name = "create_webhook_subscription"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/delete_by_id.rs"
-name = "delete_by_id"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_account.rs"
-name = "get_account"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_account_funding_sources.rs"
-name = "get_account_funding_sources"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_account_iav_token.rs"
-name = "get_account_iav_token"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_account_mass_payments.rs"
-name = "get_account_mass_payments"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_account_transfers.rs"
-name = "get_account_transfers"
+path = "examples/create_funding_source.rs"
+name = "create_funding_source"
 edition = "2021"
 required-features = []
 
@@ -172,301 +53,13 @@ edition = "2021"
 required-features = []
 
 [[example]]
-path = "examples/get_beneficia_owner_documents.rs"
-name = "get_beneficia_owner_documents"
+path = "examples/get_funding_sources.rs"
+name = "get_funding_sources"
 edition = "2021"
 required-features = []
 
 [[example]]
-path = "examples/get_beneficial_owner.rs"
-name = "get_beneficial_owner"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_business_classification.rs"
-name = "get_business_classification"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer.rs"
-name = "get_customer"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer_documents.rs"
-name = "get_customer_documents"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer_funding_sources.rs"
-name = "get_customer_funding_sources"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer_iav_token.rs"
-name = "get_customer_iav_token"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer_mass_payments.rs"
-name = "get_customer_mass_payments"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer_notifications.rs"
-name = "get_customer_notifications"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_customer_transfers.rs"
-name = "get_customer_transfers"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_document.rs"
-name = "get_document"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_event.rs"
-name = "get_event"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_fees_by_source.rs"
-name = "get_fees_by_source"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_funding_source.rs"
-name = "get_funding_source"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_kba_session.rs"
-name = "get_kba_session"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_label.rs"
-name = "get_label"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_label_reallocation.rs"
-name = "get_label_reallocation"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_labels_for_customer.rs"
-name = "get_labels_for_customer"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_ledger_entries_for_label.rs"
-name = "get_ledger_entries_for_label"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_mass_payment.rs"
-name = "get_mass_payment"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_mass_payment_item.rs"
-name = "get_mass_payment_item"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_mass_payment_items.rs"
-name = "get_mass_payment_items"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_micro_deposits.rs"
-name = "get_micro_deposits"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_notification.rs"
-name = "get_notification"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_ownership_status.rs"
-name = "get_ownership_status"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_transfer.rs"
-name = "get_transfer"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_transfer_failure.rs"
-name = "get_transfer_failure"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_webhook.rs"
-name = "get_webhook"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/get_webhook_subscription.rs"
-name = "get_webhook_subscription"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/hooks_by_id.rs"
-name = "hooks_by_id"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/initiate_micro_deposits.rs"
-name = "initiate_micro_deposits"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/list_business_classifications.rs"
-name = "list_business_classifications"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/list_customers.rs"
-name = "list_customers"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/list_events.rs"
-name = "list_events"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/list_webhoook_subscriptions.rs"
-name = "list_webhoook_subscriptions"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/o_auth.rs"
-name = "o_auth"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/reallocate_label.rs"
-name = "reallocate_label"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/remove_label.rs"
-name = "remove_label"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/retries_by_id.rs"
-name = "retries_by_id"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/retry_webhook.rs"
-name = "retry_webhook"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/root.rs"
-name = "root"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/sandbox_simulations.rs"
-name = "sandbox_simulations"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/update_beneficial_owner.rs"
-name = "update_beneficial_owner"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/update_customer.rs"
-name = "update_customer"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/update_funding_source.rs"
-name = "update_funding_source"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/update_mass_payment.rs"
-name = "update_mass_payment"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/update_transfer.rs"
-name = "update_transfer"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/update_webhook_subscription.rs"
-name = "update_webhook_subscription"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/upload_beneficial_owner_document.rs"
-name = "upload_beneficial_owner_document"
-edition = "2021"
-required-features = []
-
-[[example]]
-path = "examples/upload_customer_document.rs"
-name = "upload_customer_document"
+path = "examples/get_transfers.rs"
+name = "get_transfers"
 edition = "2021"
 required-features = []

@@ -4,6 +4,6 @@ use dwolla::{Client, types::{CatalogResponse, ListCustomersStatus}};
 async fn main() {
     let client = Client::from_env().await;
     let id = "id";
-    let response = client.get_balance(id).await.unwrap();
+    let response = client.get_customer_funding_sources(id, Some(false)).await.unwrap();
     println!("{:#?}", response);
 }

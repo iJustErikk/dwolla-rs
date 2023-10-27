@@ -1,9 +1,8 @@
 #![allow(unused_imports)]
-use dwolla::DwollaClient;
-use dwolla::model::*;
+use dwolla::{Client, types::CatalogResponse};
 #[tokio::main]
 async fn main() {
-    let client = DwollaClient::from_env().await;
+    let client = Client::from_env().await;
     let response = client.root().await.unwrap();
     println!("{:#?}", response);
 }
