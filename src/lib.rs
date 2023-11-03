@@ -7,7 +7,7 @@ use reqwest::header::{self, CONTENT_TYPE, ACCEPT, LOCATION};
 #[allow(unused_imports)]
 use reqwest::header::{HeaderMap, HeaderValue};
 
-use types::{CatalogResponse, CustomerListResponse, Customer, FailedCreateCustomerResponse, FailedValidationCreateCustomerResponse, FundingSourceBalance, TransferListResponse, HalLink, FundingSourceListResponse, OAuthResponse};
+use types::{CatalogResponse, CustomerListResponse, Customer, FailedCreateCustomerResponse, FailedValidationCreateCustomerResponse, FundingSourceBalance, TransferListResponse, HalLink, FundingSourceListResponse, OAuthResponse, FundingSource};
 pub mod types {
     use chrono::{NaiveDate, DateTime, Utc};
     use reqwest::Response;
@@ -493,7 +493,7 @@ pub mod types {
     }
     #[derive(Clone, Debug, Deserialize, Serialize)]
     pub struct CustomerList {
-        customers: Vec<Customer>
+        pub customers: Vec<Customer>
     }
     #[derive(Clone, Debug, Deserialize, Serialize)]
     pub struct CustomerListResponse {
@@ -2646,8 +2646,7 @@ impl Client {
         let response = result?;
         match response.status().as_u16() {
             200u16 => {
-                let catalog_response: Customer = response.json().await?;
-                Ok(catalog_response)
+                Ok(response.json::<Customer>().await?)
             },
             403u16 => Err(Error::ErrorResponse(ResponseValue::empty(response))),
             404u16 => Err(Error::ErrorResponse(ResponseValue::empty(response))),
@@ -3361,7 +3360,7 @@ impl Client {
     pub async fn get_funding_source<'a>(
         &'a self,
         id: &'a str,
-    ) -> Result<ResponseValue<ByteStream>, Error<()>> {
+    ) -> Result<FundingSource, Error<()>> {
         let url = format!(
             "{}/funding-sources/{}",
             self.baseurl,
@@ -3371,7 +3370,7 @@ impl Client {
         let result = self.client.execute(request).await;
         let response = result?;
         match response.status().as_u16() {
-            200u16 => Ok(ResponseValue::stream(response)),
+            200u16 => Ok(response.json::<FundingSource>().await?),
             404u16 => Err(Error::ErrorResponse(ResponseValue::empty(response))),
             _ => Err(Error::UnexpectedResponse(response)),
         }
