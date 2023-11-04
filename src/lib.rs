@@ -2536,12 +2536,12 @@ impl Client {
     /// - `limit`: How many results to return.
     /// - `offset`: How many results to skip.
     /// - `search`: Search term.
-    /// - `status`: Status filter.
+    /// - `email`: Email filter.
     pub async fn list_customers<'a>(
         &'a self,
         limit: Option<i64>,
         offset: Option<i32>,
-        search: Option<&'a str>,
+        email: Option<&'a str>,
         status: Option<types::ListCustomersStatus>,
     ) -> Result<CustomerListResponse, Error<()>> {
         let url = format!("{}/customers", self.baseurl,);
@@ -2554,8 +2554,8 @@ impl Client {
             query.push(("offset", v.to_string()));
         }
 
-        if let Some(v) = &search {
-            query.push(("search", v.to_string()));
+        if let Some(v) = &email {
+            query.push(("email", v.to_string()));
         }
 
         if let Some(v) = &status {
@@ -2563,6 +2563,8 @@ impl Client {
         }
 
         let request = self.client.get(url).query(&query).build()?;
+        let url = request.url().as_ref().to_string();
+        println!("{}", url);
         let result = self.client.execute(request).await;
         let response = result?;
         match response.status().as_u16() {
