@@ -3445,7 +3445,7 @@ impl Client {
                 let balance:FundingSourceBalance  = response.json().await.unwrap();
                 // TODO: this assumes USD
                 // can address this when progenitor works with dwolla's spec
-                Ok(balance.balance.value[1..balance.balance.value.len()-1].to_string().parse::<f64>().unwrap())
+                Ok(balance.balance.value.as_str().parse::<f64>().unwrap())
             },
             403u16 => Err(Error::ErrorResponse(ResponseValue::empty(response))),
             404u16 => Err(Error::ErrorResponse(ResponseValue::empty(response))),
